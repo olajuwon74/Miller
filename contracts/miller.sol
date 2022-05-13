@@ -8,7 +8,7 @@ contract RandomNumberGen is VRFConsumerBase {
     bytes32 internal keyHash;
     uint256 internal fee;
     uint256 public randomNumber;
-    uint[] public expandedValues;
+    uint[] expandedValues;
 
 
 
@@ -27,6 +27,7 @@ contract RandomNumberGen is VRFConsumerBase {
         fee = _fee;
     }
 
+    event ChosenOnes(uint[] expandedValues);
 
         function getRandomness() public returns (bytes32) {
         require(
@@ -43,6 +44,11 @@ contract RandomNumberGen is VRFConsumerBase {
         randomNumber = randomness;
     }
 
+
+    // To get the list of random numbers between the range of the _index (the amount of people who indicated to join the karokee session)
+    // NumberSelected is the amount of candidates to be chosen
+    // epandedValues returns the array of numbers in a range.
+
      function getRandomAddresses(uint256 _randomNumber, uint numberSelected, uint _index) public returns (uint256[] memory _expandedValues){
          expandedValues = _expandedValues;
          assert(numberSelected < _index);
@@ -53,7 +59,10 @@ contract RandomNumberGen is VRFConsumerBase {
         for(uint256 i = 0; i < numberSelected; i++){
             expandedValues[i] = uint256(keccak256(abi.encode(randomNumber, i))) % _index;
         }
+
+        emit ChosenOnes(expandedValues);
         return expandedValues;
+        
     }
 
 }
@@ -82,7 +91,7 @@ contract Karoke{
     }
 
     struct SelectedAddresses{
-        address randomAddress;
+        address secAddress;
         bool chosen;
     }
 
@@ -97,8 +106,9 @@ contract Karoke{
     // uint Index = 1;
 
     mapping(address => AddressesIndicated) public addressAdded;
-    // mapping(uint => AddressesIndicated) public addAdded;
     mapping(address => SelectedAddresses) public addressSelected;
+
+    // mapping(uint => AddressesIndicated) public addAdded;
     // mapping(uint => SelectedAddresses) public addrSelected;
 
     event SessionIsOn(uint staDate, uint endingDate);
@@ -145,19 +155,14 @@ contract Karoke{
       return index;
     }
 
-    // function finalist(uint _select, uint _select2, uint _select3, uint _select4, uint _select5) public onlyOwner returns (address){
-    //     return (Selected [_select].singerAdress);
-    //     return (Selected [_select2].singerAdress);
-    //     return (Selected [_select3].singerAdress);
-    //     return (Selected [_select4].singerAdress);
-    //     return (Selected [_select5].singerAdress);
-    // }
-
-     function finalist(uint _select, uint _select2, uint _select3, uint _select4, uint _select5) public onlyOwner returns (address){
-        return (Selected [_select].singerAdress);
-        return (Selected [_select2].singerAdress);
-        return (Selected [_select3].singerAdress);
-        return (Selected [_select4].singerAdress);
-        return (Selected [_select5].singerAdress);
+     function finalist(uint _select, uint _select2, uint _select3, uint _select4, uint _select5 ) public onlyOwner returns (address, address, address, address, address){
+         SelectedAddresses storage selectee = addressSelected[Selected [_select].singerAdress];
+         selectee.secAddress = Selected [_select].singerAdress;
+         selectee.secAddress = Selected [_select2].singerAdress;
+         selectee.secAddress = Selected [_select3].singerAdress;
+         selectee.secAddress = Selected [_select4].singerAdress;
+         selectee.secAddress = Selected [_select5].singerAdress;
+        return ((Selected [_select].singerAdress), (Selected [_select2].singerAdress), (Selected [_select3].singerAdress), (Selected [_select4].singerAdress), (Selected [_select5].singerAdress));
+        
     }
 }
