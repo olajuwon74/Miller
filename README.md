@@ -8,6 +8,7 @@ we hope to help people get the exposure they desire at no cost at all. For every
 ## How it works
 Anybody is allowed to indicate their interest and singers are chosen at random using chainlink to generate random numbers within the range of the indicated numbers of address, the selected numbers are then mapped to get the corresponding addresses, miller is free and fair and there is no central authority.
 
+
 ![Connect](https://github.com/olajuwon74/Miller/blob/master/images/After%20Connecting%20Wallet%20(1).png)
 
 # Advanced Sample Hardhat Project
