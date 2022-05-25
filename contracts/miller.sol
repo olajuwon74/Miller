@@ -103,19 +103,15 @@ contract Karoke{
     }
 
     uint public index = 1;
-    // uint Index = 1;
+    uint Index = 1;
 
     mapping(address => AddressesIndicated) public addressAdded;
     mapping(address => SelectedAddresses) public addressSelected;
 
-    // mapping(uint => AddressesIndicated) public addAdded;
-    // mapping(uint => SelectedAddresses) public addrSelected;
-
     event SessionIsOn(uint staDate, uint endingDate);
+    event TotalApplicants(uint number);
 
-     function withdraw(address addr, uint amount) public onlyOwner{
-        payable (addr).transfer(amount);
-     }
+    // Anybody can indicate interest in partaking all addresses are then stored in a struct, from which selected few are chosen from.
 
      function indicate() public {
          assert(!addressAdded[msg.sender].added);
@@ -125,25 +121,62 @@ contract Karoke{
          index++;
      }
 
-     function tip(address _addr, uint amount) public {
-        payable (_addr).transfer(amount);
-     }
+    // To start a session or season
 
-     function setDate(Status _status, uint sDate, uint eDate) public onlyOwner {
+     function startSession(Status _status, uint sDate, uint eDate) public onlyOwner {
          if(_status == Status.On){
             assert(eDate > sDate);
             sDate = startDate;
             eDate = endDate;
             emit SessionIsOn(sDate, eDate);
-            if(eDate == eDate){
-                _status = Status.Off;
-            }
          }
          else{
-            
+            revert();
          }
          
      }
+     
+
+    // To view number of all applicants
+
+    function viewTotalApplicants () public returns (uint _index) {
+    index = _index;
+    emit TotalApplicants(_index);
+    return index;
+    }
+
+
+    // The emitted numbers from the random generator are inputed and are stored in a separate struct.
+
+     function finalist(uint _select, uint _select2, uint _select3, uint _select4, uint _select5 ) public onlyOwner returns (address, address, address, address, address){
+    
+         SelectedAddresses storage selectee = addressSelected[Selected [_select].singerAdress];
+
+         selectee.secAddress = Selected [_select].singerAdress;
+         selectee.chosen = true;
+         Index++;
+
+         selectee.secAddress = Selected [_select2].singerAdress;
+         selectee.chosen = true;
+         Index++;
+
+         selectee.secAddress = Selected [_select3].singerAdress;
+         selectee.chosen = true;
+         Index++;
+
+         selectee.secAddress = Selected [_select4].singerAdress;
+         selectee.chosen = true;
+         Index++;
+
+         selectee.secAddress = Selected [_select5].singerAdress;
+         selectee.chosen = true;
+         Index++;
+
+        return ((Selected [_select].singerAdress), (Selected [_select2].singerAdress), (Selected [_select3].singerAdress), (Selected [_select4].singerAdress), (Selected [_select5].singerAdress));
+        
+    }
+
+    // To upload, only addresses stored in the struct above can upload contents
 
      function upload() payable public {
          assert(addressSelected[msg.sender].chosen);
@@ -151,18 +184,18 @@ contract Karoke{
          balance+= msg.value;
      }
 
-    function viewTotalApplicants () public view returns (uint) {
-      return index;
-    }
 
-     function finalist(uint _select, uint _select2, uint _select3, uint _select4, uint _select5 ) public onlyOwner returns (address, address, address, address, address){
-         SelectedAddresses storage selectee = addressSelected[Selected [_select].singerAdress];
-         selectee.secAddress = Selected [_select].singerAdress;
-         selectee.secAddress = Selected [_select2].singerAdress;
-         selectee.secAddress = Selected [_select3].singerAdress;
-         selectee.secAddress = Selected [_select4].singerAdress;
-         selectee.secAddress = Selected [_select5].singerAdress;
-        return ((Selected [_select].singerAdress), (Selected [_select2].singerAdress), (Selected [_select3].singerAdress), (Selected [_select4].singerAdress), (Selected [_select5].singerAdress));
-        
-    }
+    // To tip addresses of singers, if listeners love their act.
+
+     function tip(address _addr, uint amount) public {
+        payable (_addr).transfer(amount);
+     }
+
+
+    // withdrawal function
+
+     function withdraw(address addr, uint amount) public onlyOwner{
+        payable (addr).transfer(amount);
+     }
+
 }
