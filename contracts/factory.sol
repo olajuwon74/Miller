@@ -8,17 +8,23 @@ import "./clone.sol";
 contract Factory is CloneFactory {
     // stores an array of all child contract
     Karoke[] public KarokeArray;
-
     address public masterContract;
+    address public Owner = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
+    
 
 
     constructor(address _masterContract) {
-        masterContract = _masterContract;
+        masterContract = _masterContract; 
+    }
+
+    modifier superAd(){
+        require (msg.sender == Owner, "stop");
+        _;
     }
 
     event DataStored(address createdClubAddress);
 
-    function createClub() external {
+    function createClub() external superAd{
         Karoke session = Karoke(createClone(masterContract));
         KarokeArray.push(session);
         emit DataStored(address(session));
