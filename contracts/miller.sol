@@ -111,8 +111,11 @@ contract Karoke{
     event SessionIsOn(uint staDate, uint endingDate);
     event TotalApplicants(uint number);
 
-    // Anybody can indicate interest in partaking all addresses are then stored in a struct, from which selected few are chosen from.
+    function createClub() public {
 
+    }
+
+    // Anybody can indicate interest in partaking all addresses are then stored in a struct, from which selected few are chosen from
      function indicate() public {
          assert(!addressAdded[msg.sender].added);
          AddressesIndicated storage indicated = addressAdded[msg.sender];
