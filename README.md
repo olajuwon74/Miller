@@ -11,6 +11,12 @@ Anybody is allowed to indicate their interest and singers are chosen at random u
 
 ![Connect](https://github.com/olajuwon74/Miller/blob/master/images/After%20Connecting%20Wallet%20(1).png)
 
+Repository to the frontend:
+https://github.com/Ephraim-nonso/Mixer-FE
+
+Website:
+mixer-fe.vercel.app
+
 # Advanced Sample Hardhat Project
 
 This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
